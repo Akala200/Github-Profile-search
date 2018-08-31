@@ -1,14 +1,19 @@
 
 
-function getProfile(e) {
-    e.preventDefault;
+function getProfile(e){
+    e.preventDefault();
+    console.log('Fetching...');
+
     var username = document.getElementById('username').value;
+    if(!username || username == ''){
+        username = 'bradtraversy';
+    }
 
     var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
+    xhttp.onreadystatechange = function(){
         if(xhttp.readyState == 4 && xhttp.status == 200){
-            var user = JSON.parse( xhttp.responseText);
-            document.getElementById('profile').innerHTML = `<div class="row">
+            var user = JSON.parse(xhttp.responseText);
+            document.getElementById('profile').innerHTML  = `<div class="row">
             <div class="offset-lg-4 col-lg-4 col-sm-6 col-12 main-section text-center">
                 <div class="row">
                     <div class="col-lg-12 col-sm-12 col-12 profile-header"></div>
@@ -33,13 +38,12 @@ function getProfile(e) {
                 </div>
             </div>
           </div>
-        </div>`
-      ;
-        }
+        </div>`;
     }
-    xhttp.open('GET', 'https://api.github.com/users/'+ username, true);
-    xhttp.send();
 }
 
-document.getElementById('userForm').addEventListener('submit', getProfile, false)
+xhttp.open('GET', 'https://api.github.com/users/'+username, true);
+xhttp.send();
+}
 
+document.getElementById('userForm').addEventListener('submit', getProfile, false);
